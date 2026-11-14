@@ -1,113 +1,66 @@
-// Romantic Web Audio Synthesizer playing an acoustic piano / music box melody
-// Designed to be completely self-contained with zero network latency or broken links
+// Audio Controller playing "Seven" by Jung Kook (feat. Latto)
+// Uses HTML5 Audio API with loop, smooth volume control, and robust autoplay handling
 
 class RomanticAudioEngine {
-  private ctx: AudioContext | null = null;
+  private audio: HTMLAudioElement | null = null;
   private isPlaying = false;
-  private intervalId: number | null = null;
-  private noteIndex = 0;
+  private listeners: ((playing: boolean) => void)[] = [];
 
-  // Gentle pentatonic / major romantic lullaby melody notes in Hz
-  // Melody inspired by gentle romantic piano chords
-  private melody = [
-    { freq: 261.63, dur: 0.8 }, // C4
-    { freq: 329.63, dur: 0.8 }, // E4
-    { freq: 392.00, dur: 0.8 }, // G4
-    { freq: 493.88, dur: 1.2 }, // B4
-    { freq: 440.00, dur: 0.8 }, // A4
-    { freq: 392.00, dur: 0.8 }, // G4
-    { freq: 329.63, dur: 1.4 }, // E4
+  constructor() {
+    if (typeof window !== 'undefined') {
+      this.audio = new Audio('/audio/seven.mp3');
+      this.audio.loop = true;
+      this.audio.volume = 0.65;
+      this.audio.preload = 'auto';
 
-    { freq: 293.66, dur: 0.8 }, // D4
-    { freq: 349.23, dur: 0.8 }, // F4
-    { freq: 440.00, dur: 0.8 }, // A4
-    { freq: 523.25, dur: 1.2 }, // C5
-    { freq: 493.88, dur: 0.8 }, // B4
-    { freq: 440.00, dur: 0.8 }, // A4
-    { freq: 392.00, dur: 1.6 }, // G4
+      this.audio.addEventListener('play', () => {
+        this.isPlaying = true;
+        this.notify();
+      });
 
-    { freq: 329.63, dur: 0.8 }, // E4
-    { freq: 392.00, dur: 0.8 }, // G4
-    { freq: 493.88, dur: 0.8 }, // B4
-    { freq: 587.33, dur: 1.2 }, // D5
-    { freq: 523.25, dur: 0.8 }, // C5
-    { freq: 440.00, dur: 1.4 }, // A4
+      this.audio.addEventListener('pause', () => {
+        this.isPlaying = false;
+        this.notify();
+      });
 
-    { freq: 349.23, dur: 0.8 }, // F4
-    { freq: 440.00, dur: 0.8 }, // A4
-    { freq: 523.25, dur: 0.8 }, // C5
-    { freq: 493.88, dur: 1.0 }, // B4
-    { freq: 392.00, dur: 1.0 }, // G4
-    { freq: 261.63, dur: 2.2 }, // C4
-  ];
-
-  private initContext() {
-    if (!this.ctx) {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      this.ctx = new AudioCtx();
-    }
-    if (this.ctx.state === 'suspended') {
-      this.ctx.resume();
+      this.audio.addEventListener('ended', () => {
+        this.isPlaying = false;
+        this.notify();
+      });
     }
   }
 
-  // Play a soft bell-like piano chime note with warm harmonic decay
-  private playNote(freq: number, duration: number) {
-    if (!this.ctx) return;
-    const now = this.ctx.currentTime;
-
-    const osc = this.ctx.createOscillator();
-    const subOsc = this.ctx.createOscillator();
-    const gain = this.ctx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq, now);
-
-    // Warm sub-harmonic
-    subOsc.type = 'triangle';
-    subOsc.frequency.setValueAtTime(freq / 2, now);
-
-    // Soft attack, gentle exponential decay
-    gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.linearRampToValueAtTime(0.08, now + 0.06);
-    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration + 0.5);
-
-    osc.connect(gain);
-    subOsc.connect(gain);
-    gain.connect(this.ctx.destination);
-
-    osc.start(now);
-    subOsc.start(now);
-    osc.stop(now + duration + 0.6);
-    subOsc.stop(now + duration + 0.6);
+  private notify() {
+    this.listeners.forEach((fn) => fn(this.isPlaying));
   }
 
-  public play() {
-    this.initContext();
-    if (this.isPlaying) return;
-    this.isPlaying = true;
-    this.noteIndex = 0;
-
-    const step = () => {
-      if (!this.isPlaying) return;
-      const current = this.melody[this.noteIndex];
-      this.playNote(current.freq, current.dur);
-      this.noteIndex = (this.noteIndex + 1) % this.melody.length;
-      this.intervalId = window.setTimeout(step, current.dur * 1000);
+  public subscribe(fn: (playing: boolean) => void) {
+    this.listeners.push(fn);
+    return () => {
+      this.listeners = this.listeners.filter((l) => l !== fn);
     };
+  }
 
-    step();
+  public play(): Promise<void> {
+    if (!this.audio) return Promise.resolve();
+    return this.audio.play().then(() => {
+      this.isPlaying = true;
+      this.notify();
+    }).catch(() => {
+      this.isPlaying = false;
+      this.notify();
+    });
   }
 
   public pause() {
+    if (!this.audio) return;
+    this.audio.pause();
     this.isPlaying = false;
-    if (this.intervalId !== null) {
-      clearTimeout(this.intervalId);
-      this.intervalId = null;
-    }
+    this.notify();
   }
 
   public toggle(): boolean {
+    if (!this.audio) return false;
     if (this.isPlaying) {
       this.pause();
       return false;

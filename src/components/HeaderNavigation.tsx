@@ -76,7 +76,7 @@ export const HeaderNavigation: React.FC<HeaderNavigationProps> = ({
         >
           <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
         </div>
-        <span className="hidden md:inline font-medium text-rose-700">Until I Found You</span>
+        <span className="hidden md:inline font-medium text-rose-700">Seven — Jung Kook</span>
         {isPlayingAudio ? (
           <Volume2 className="w-3.5 h-3.5 text-rose-500" />
         ) : (

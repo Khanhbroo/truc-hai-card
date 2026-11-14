@@ -8,6 +8,18 @@
   }
 }
 
+.font-handwriting {
+  font-family: 'Dancing Script', 'Charm', cursive, sans-serif;
+}
+
+.font-calligraphy {
+  font-family: 'Dancing Script', cursive, sans-serif;
+}
+
+.font-charm {
+  font-family: 'Charm', cursive, sans-serif;
+}
+
 /* Custom romantic parchment paper texture effect */
 .parchment-paper {
   background-color: #fffdfa;

@@ -9,8 +9,9 @@ export default {
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'sans-serif'],
         serif: ['"Playfair Display"', 'serif'],
-        handwriting: ['Caveat', 'cursive'],
+        handwriting: ['"Dancing Script"', '"Charm"', 'cursive', 'sans-serif'],
         calligraphy: ['"Dancing Script"', 'cursive'],
+        charm: ['"Charm"', 'cursive'],
       },
       colors: {
         rose: {
@@ -29,7 +30,6 @@ export default {
       animation: {
         'float': 'float 6s ease-in-out infinite',
         'pulse-subtle': 'pulseSubtle 3s ease-in-out infinite',
-        'sparkle': 'sparkle 2s ease-in-out infinite',
       },
       keyframes: {
         float: {
@@ -37,14 +37,10 @@ export default {
           '50%': { transform: 'translateY(-10px)' },
         },
         pulseSubtle: {
-          '0%, 100%': { opacity: '0.8', transform: 'scale(1)' },
-          '50%': { opacity: '1', transform: 'scale(1.03)' },
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.03)' },
         },
-        sparkle: {
-          '0%, 100%': { opacity: '0.3', transform: 'scale(0.8)' },
-          '50%': { opacity: '1', transform: 'scale(1.2)' },
-        }
-      }
+      },
     },
   },
   plugins: [],

@@ -21,7 +21,7 @@ Một tác phẩm thiệp tương tác kỹ thuật số lãng mạn, tinh tế 
    - Lightbox phóng to ngắm nhìn từng chi tiết ảnh chất lượng cao.
    - Thẻ lật "Những điều làm anh rung động": nụ cười tỏa nắng, sự dịu dàng và ánh mắt lấp lánh.
    - Nút kích hoạt pháo hoa trái tim bay bổng (Heart Confetti Explosion).
-   - Bản nhạc nền Piano du dương ("Until I Found You") tự động hòa âm mượt mà.
+   - Bản nhạc "Seven" — Jung Kook (feat. Latto) với giai điệu sôi động, ngọt ngào và cuốn hút tự động hòa âm mượt mà.
 
 ---
 
@@ -29,9 +29,9 @@ Một tác phẩm thiệp tương tác kỹ thuật số lãng mạn, tinh tế 
 
 - **Frontend Core**: React 18, TypeScript, Vite
 - **Styling**: Tailwind CSS với bảng màu Romantic Rose (`#FFF1F2`, `#FFE4E6`, `#FDA4AF`, `#E11D48`)
-- **Typography**: Google Fonts (`Playfair Display`, `Dancing Script`, `Caveat`, `Plus Jakarta Sans`)
+- **Typography**: Google Fonts (`Playfair Display`, `Charm`, `Dancing Script`, `Plus Jakarta Sans`)
 - **Animation**: CSS Keyframes 3D Transform & Canvas Confetti
-- **Audio Engine**: Web Audio API Sound Synthesizer (tự tạo giai điệu Acoustic Piano không phụ thuộc file MP3 ngoài)
+- **Audio Engine**: HTML5 Audio Player tích hợp ca khúc Seven (Jung Kook feat. Latto)
 
 ---
 

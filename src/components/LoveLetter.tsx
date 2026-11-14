@@ -65,7 +65,7 @@ Anh đã gom góp những khoảnh khắc xinh đẹp, rạng rỡ nhất của 
         </div>
 
         {/* Letter Body (Typewriter Effect) */}
-        <div className="min-h-[240px] text-slate-800 font-handwriting text-2xl sm:text-3xl leading-relaxed whitespace-pre-line tracking-wide">
+        <div className="min-h-[240px] text-slate-800 font-charm text-2xl sm:text-3xl leading-relaxed whitespace-pre-line tracking-wide">
           {displayedText}
           {!isTypingDone && (
             <span className="inline-block w-2 h-6 bg-rose-500 animate-pulse ml-1"></span>
@@ -88,10 +88,10 @@ Anh đã gom góp những khoảnh khắc xinh đẹp, rạng rỡ nhất của 
         <div className="mt-8 pt-4 border-t border-rose-200/60 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Heart className="w-5 h-5 text-rose-500 fill-rose-500 animate-pulse-subtle" />
-            <span className="text-xs sm:text-sm font-handwriting text-xl text-slate-500">Mãi yêu em</span>
+            <span className="text-xs sm:text-sm font-charm text-xl text-slate-500">Mãi yêu em</span>
           </div>
           <div className="text-right">
-            <span className="font-calligraphy text-2xl sm:text-3xl text-rose-600 font-bold block">
+            <span className="font-charm text-3xl sm:text-4xl text-rose-600 font-bold block">
               Anh của em ❤️
             </span>
           </div>
